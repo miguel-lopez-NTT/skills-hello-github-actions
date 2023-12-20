@@ -5,15 +5,19 @@ on:
 permissions:
   pull-requests: write
 jobs:
-  build:
-    name: Post welcome comment
+  job_1:
+    name: Job 1
     runs-on: ubuntu-latest
     steps:
-      - run: gh pr comment $PR_URL --body "Welcome to the repository!"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR_URL: ${{ github.event.pull_request.html_url }}
-      - run: gh pr comment $PR_URL --body "Welcome to the repository! Testing"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR_URL: ${{ github.event.pull_request.html_url }}
+      - run: echo "Job 1" && sleep 5 && echo "end 1"
+  job_2:
+    name: Job 2
+    needs: Job_1
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Job 2" && sleep 5 && echo "end 2"
+  job_3:
+    name: Job 3
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Job 3" && sleep 5 && echo "end 3"
